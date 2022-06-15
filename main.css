@@ -1,0 +1,187 @@
+:root{
+   --black-bg: #1B1B1B;
+   --black-nav: #27282C;
+   --kt-20: rgba(255,255,255,0.2);
+   --kt-50:  rgba(255,255,255,0.5);
+   --purple: #7F52FF;
+   width: 100%
+}
+
+*{
+    font-family: sans-serif;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+}
+
+html, body {
+    height: 100%
+  }
+
+body{
+    background-color: var(--black-bg);
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+/* Navigation */
+
+.nav{
+    gap: 8px;
+    display: flex;
+    margin: 0;
+    padding: 24px;
+    width: calc(100% - 48px);
+}
+
+nav{
+    width: calc(100% - 48px) !important;
+    background-color: var(--black-nav);
+}
+
+
+
+/* Sidebar */
+.container{
+    display: flex;
+    width: 100%;
+    min-height: calc(100% - 88px);
+    align-items: stretch;
+}
+
+.sidebar{
+    display: flex;
+    flex-direction: column;
+    min-width: 252px;
+    height: 100%;
+    border-right: 1px solid var(--kt-20);
+}
+
+.sidebar div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+
+.sidebar div p{
+    padding: 12px;
+    color: var(--kt-50);
+}
+
+.signin{
+    margin: auto 0 12px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.signin p{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Editor */
+.editor{
+    width: 100%;
+}
+
+.editor-nav{
+    border-bottom: 1px solid var(--kt-20);
+}
+
+#run{
+    background-color: var(--purple);
+}
+
+.editor-container{
+    display: flex;
+    height: calc(100% - 89px);
+}
+
+.editor-container * {
+    padding: 24px 0  0 24px;
+    margin: 0;
+}
+
+.editor-container p{
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--kt-50);
+}
+
+textarea{
+    background-color: var(--black-bg);
+    min-height: calc(100% - 88px - 89px);
+    width: 100%;
+    border: none;
+    font-family: 'Courier New', Courier, monospace;
+    resize: none;
+}
+
+
+/* Components */
+a{
+    height: 40px;
+    background-color: var(--black-nav);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.sidebar div a{
+    padding: 12px;
+    justify-content: flex-start;
+    background-color: var(--black-bg);
+}
+
+button{
+    background-color: var(--black-bg);
+    border-radius: 20px;
+    height: 40px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 0 20px;
+    white-space: nowrap;
+}
+
+button:hover, a:hover{
+    filter: brightness(1.5);
+}
+
+input{
+    background-color: var(--black-nav);
+    border: 1px solid var(--kt-20);
+    display: flex;
+    padding: 0 0 0 8px;
+    color: var(--kt-50);
+}
+
+
+textarea:active, textarea:focus{
+    outline: none;
+}
+
+#help{
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 7px;
+    height: auto;
+    border-radius: 20px;
+}
+
+.btn-border{
+    border: 1px solid var(--kt-20);
+}
+

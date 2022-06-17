@@ -28,54 +28,74 @@ body{
     margin: 0;
 }
 
-/* Navigation */
-
-.nav{
-    gap: 8px;
-    display: flex;
-    margin: 0;
-    padding: 24px;
-    width: calc(100% - 48px);
-}
-
-nav{
-    width: calc(100% - 48px) !important;
-    background-color: var(--black-nav);
-}
-
-
-
-/* Sidebar */
 .container{
     display: flex;
     width: 100%;
-    min-height: calc(100% - 88px);
+    min-height: calc(100% - 64px);
     align-items: stretch;
 }
 
+
+/* Navigation */
+
+.nav{
+    display: flex;
+    margin: 0;
+    padding: 0 32px;
+    width: calc(100% - 64px);
+}
+
+nav{
+    width: calc(100% - 64px) !important;
+    background-color: var(--black-nav);
+}
+
+.nav .active{
+    border-bottom: 2px solid white;
+    padding-bottom: 10px;
+}
+
+.nav a {
+    padding: 12px 16px;
+}
+
+
+/* Sidebar */
 .sidebar{
     display: flex;
     flex-direction: column;
     min-width: 252px;
-    height: 100%;
+    height: calc(100% - 8px);
     border-right: 1px solid var(--kt-20);
+    padding-top: 8px;
 }
 
 .sidebar div{
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 8px;
 }
-
 
 .sidebar div p{
-    padding: 12px;
+    padding: 0 0 0 12px;
     color: var(--kt-50);
+    font-size: 13px;
 }
 
+.sidebar div a{
+    padding: 0 0 0 32px;
+    justify-content: flex-start;
+    background-color: var(--black-bg);
+}
+
+.sidebar .active{
+    background-color: white;
+    color: black;
+}
+
+
 .signin{
-    margin: auto 0 12px 0;
+    margin: auto 0 24px 0;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -87,6 +107,11 @@ nav{
     margin: 0 !important;
 }
 
+.signin a{
+    border-radius: 20px;
+    padding: 0 20px !important;
+}
+
 /* Editor */
 .editor{
     width: 100%;
@@ -94,6 +119,7 @@ nav{
 
 .editor-nav{
     border-bottom: 1px solid var(--kt-20);
+    padding: 12px 32px;
 }
 
 #run{
@@ -102,7 +128,8 @@ nav{
 
 .editor-container{
     display: flex;
-    height: calc(100% - 89px);
+    height: calc(100% - 65px);
+    background-image: url("./img/rkKXlz.jpeg");
 }
 
 .editor-container * {
@@ -112,15 +139,20 @@ nav{
 
 .editor-container p{
     font-family: 'Courier New', Courier, monospace;
+    line-height: 24px;
     color: var(--kt-50);
 }
 
 textarea{
-    background-color: var(--black-bg);
-    min-height: calc(100% - 88px - 89px);
+    background-color: rgba(0,0,0,0.0);
+    min-height: calc(100% - 64px - 65px);
     width: 100%;
-    border: none;
+    
     font-family: 'Courier New', Courier, monospace;
+    line-height: 24px;
+    color: #bababa;
+
+    border: none;
     resize: none;
 }
 
@@ -133,12 +165,6 @@ a{
     justify-content: center;
     align-items: center;
     padding: 0 20px;
-}
-
-.sidebar div a{
-    padding: 12px;
-    justify-content: flex-start;
-    background-color: var(--black-bg);
 }
 
 button{
@@ -166,7 +192,6 @@ input{
     padding: 0 0 0 8px;
     color: var(--kt-50);
 }
-
 
 textarea:active, textarea:focus{
     outline: none;

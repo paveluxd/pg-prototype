@@ -9,35 +9,45 @@
     <link rel="stylesheet" href="./main.css">
 </head>
 <body>
+
+<!-- Website navigation -->
     <nav class="nav">
         <img src="./img/logo.svg" alt="" style="margin-right: auto;">
         <a href="">Solutions</a>
         <a href="">Docs</a>
         <a href="">Community</a>
         <a href="">Teach</a>
-        <a href="">Play</a>
+        <a href="" class="active">Play</a>
         <a href=""><img src="./img/search.svg" alt=""></a>
     </nav>
+
+<!-- Container -->
     <div class="container">
+
+<!-- Sidebar -->
         <div class="sidebar">
             <div class="examples">
-                <p>Examples</p>
-                <a href="">Simple</a>
+                <p>EXAMPLES</p>
+                <a href="" class="active">Simple</a>
                 <a href="">Asyncronous</a>
-                <a href="">Objct-oriented</a>
+                <a href="">Object-oriented</a>
                 <a href="">Functional</a>
                 <a href="">Ideal for tests</a>
             </div>
             <div class="mysnippets">
-                <p>My code snippets</p>
+                <p>MY CODE SNIPPETS</p>
                 <a href="">Blank</a>
             </div>
             <div class="signin">
-                <p>Sign in to save & create files</p>
-                <button class="btn-border">Sign in</button>
+                <p>Sign in to create & save snippets</p>
+                <a class="btn-border" onclick="authenticate()" href="./auth-form.html" target="_blank">Sign in</a>
             </div>
         </div>
+
+<!-- Editor -->
         <div class="editor">
+
+<!-- Editor nav -->
             <div class="nav editor-nav">
                 <button>Kotlin 1.5.21 <img src="./img/dropdown.svg" alt=""></button>
                 <button>JVM <img src="./img/dropdown.svg" alt=""></button>
@@ -47,6 +57,8 @@
                 <button><img src="./img/code.svg" alt="">Share code</button>
                 <button id="run"><img src="./img/play.svg" alt="">Run</button>
             </div>
+
+<!-- Editor container -->
             <div class="editor-container">
                 <p>
                     1<br>
@@ -63,8 +75,11 @@ fun main() {
 }
                 </textarea>
             </div>
+
+<!-- Help button -->
             <button id="help" class="btn-border"><img src="./img/help.svg" alt=""></button>
         </div>
     </div>
 </body>
+<script src="main.js"></script>
 </html>

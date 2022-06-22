@@ -4,6 +4,7 @@
    --kt-20: rgba(255,255,255,0.2);
    --kt-50:  rgba(255,255,255,0.5);
    --purple: #7F52FF;
+   --w0: rgba(0,0,0,0);
    width: 100%
 }
 
@@ -50,7 +51,7 @@ nav{
     background-color: var(--black-nav);
 }
 
-.nav .active{
+.nav .selected{
     border-bottom: 2px solid white;
     padding-bottom: 10px;
 }
@@ -82,19 +83,65 @@ nav{
     font-size: 13px;
 }
 
-.sidebar div a{
+.sidebar div button:not(.btn-round), .add{
     padding: 0 0 0 32px;
     justify-content: flex-start;
     background-color: var(--black-bg);
+    border-radius: 0;
+    width: 100%;
 }
 
 .sidebar .active{
-    background-color: white;
+    background-color: white !important;
     color: black;
 }
 
+.sidebar .active *{
+    background-color: white !important;
+    color: black;
+}
 
-.signin{
+.snip-item{
+    display: flex;
+    justify-content: space-between;
+    max-height: 40px;
+    flex-direction: row !important;
+    position: relative;
+}
+
+.snip-item .btn-round{
+    display: none;
+}
+
+.snip-item:hover > .btn-round{
+    display: flex;
+}
+
+.sub-menu{
+    display: flex;
+    flex-direction: column;
+    max-width: 168px;
+    position: absolute;
+    top:40px;
+    left: 212px;
+    z-index: 2;    
+    border: 1px solid var(--kt-20);
+}
+
+.sub-menu *{
+    background-color: white !important;
+    color: black;
+}
+
+.sub-menu button:hover{
+    background-color: #dadada !important;
+    filter: none;
+}
+
+
+
+/* Bot */
+.container-bot{
     margin: auto 0 24px 0;
     display: flex;
     flex-direction: column;
@@ -111,6 +158,22 @@ nav{
     border-radius: 20px;
     padding: 0 20px !important;
 }
+
+.signout{
+    margin: auto 0 12px 0;
+    flex-direction: row !important;
+    padding: 0 12px;
+    gap: 4px;
+    justify-content: space-between;
+    width: auto !important;
+}
+
+.signout p {
+    width: 100%;
+    padding: 0 !important;
+    margin: 4px 0 0 0 !important;
+}
+
 
 /* Editor */
 .editor{
@@ -129,7 +192,7 @@ nav{
 .editor-container{
     display: flex;
     height: calc(100% - 65px);
-    background-image: url("./img/rkKXlz.jpeg");
+    /* background-image: url("./img/rkKXlz.jpeg"); */
 }
 
 .editor-container * {
@@ -158,6 +221,18 @@ textarea{
 
 
 /* Components */
+.text-3{
+    font-size: 16px !important;
+    line-height: 24px !important;
+}
+
+h3{
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+    margin: 0;
+}
+
 a{
     height: 40px;
     background-color: var(--black-nav);
@@ -166,6 +241,7 @@ a{
     align-items: center;
     padding: 0 20px;
 }
+
 
 button{
     background-color: var(--black-bg);
@@ -183,7 +259,19 @@ button{
 
 button:hover, a:hover{
     filter: brightness(1.5);
+    /* background-color: red; */
 }
+
+.btn-round{
+    padding: 7px !important;
+    min-width: 40px;
+    border-radius: 20px !important;
+}
+
+.btn-border{
+    border: 1px solid var(--kt-20);
+}
+
 
 input{
     background-color: var(--black-nav);
@@ -193,20 +281,77 @@ input{
     color: var(--kt-50);
 }
 
+
 textarea:active, textarea:focus{
     outline: none;
 }
 
+
 #help{
     position: fixed;
-    bottom: 24px;
-    right: 24px;
-    padding: 7px;
-    height: auto;
-    border-radius: 20px;
+    bottom: 12px;
+    right: 12px;
 }
 
-.btn-border{
+
+/* Modals */
+.shade {
+    position: fixed; 
+    display:flex; 
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.56);
+    z-index: 3;
+}
+
+.dialogue-box{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: auto;
+    padding: 24px;
+    gap: 48px;
+    width: 504px;
+}
+
+.dialogue-box p, .dialogue-box h3{
+    color: black !important;
+}
+
+
+.notification{
+    position: fixed;
+    right: 56px;
+    bottom: 12px;
     border: 1px solid var(--kt-20);
+    border-radius: 8px;
+    background-color: var(--black-nav);
+    padding: 0px 16px;
+    display: flex;
+    width: 460px;
+}
+
+.notification p{
+    margin: 12px  auto 12px 0;
+    padding-top: 2px;
+}
+
+.notification button{
+    margin: auto 12px;
+}
+
+.notification img{
+    animation: rotate 1s infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(359deg);  }
+  }
+
+
+/* JS */
+.hide, .hide *{
+    display: none !important;
 }
 

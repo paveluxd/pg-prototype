@@ -24,8 +24,8 @@
         <input type="text">
 
         <div style="display: flex; gap: 12px;">
-            <button>Rename</button>
-            <button>Cancel</button>
+            <button onclick="toggleHide('deleteDialogue')">Rename</button>
+            <button onclick="toggleHide('deleteDialogue')">Cancel</button>
         </div>
     </div>
 </div>
@@ -44,9 +44,7 @@
         <p class="text-3">Sign in with</p>
         
         <div style="display: flex; gap: 12px;">
-            <a href="./auth-form.html" target="_blank" onclick="authenticate()">Google</a>
-            <a href="./auth-form.html" target="_blank" onclick="authenticate()">GitHub</a>
-            <a href="./auth-form.html" target="_blank" onclick="authenticate()">JetBrains</a>
+            <a href="./auth-form.html" target="_blank" onclick="authenticate(), genSideBar(initialState)">Google</a>
         </div>
     </div>
 </div>
@@ -68,19 +66,15 @@
     <div class="container">
 
 <!-- Sidebar -->
-        <div class="sidebar">           
-            <div class="examples">
+        <div class="sidebar">     
+            <div class="top-section"></div>      
 
-            </div>
-
-            <div class="snippets">
-            </div>
             <button class="add hide" onclick="addItem()"><img src="./img/plus.svg" alt="">Add snippet</button>
             
             <div class="signout container-bot hide">
                 <img src="./img/person.svg" style="height: 24px;">
                 <p class="text-3">Robert Parker</p>
-                <button class="btn-round" onclick="authenticate('sign out')"><img src="./img/exit.svg" alt=""></button>
+                <button class="btn-round" onclick="authenticate('sign out'), genSideBar(initialState)"><img src="./img/exit.svg" alt=""></button>
             </div>
 
             <div class="container-bot signin">
@@ -99,6 +93,7 @@
                 <button>JVM <img src="./img/dropdown.svg" alt=""></button>
                 <input type="text" placeholder="Program arguments" style="margin-right: auto;">
                 <div class="divider"></div>
+                <button class="save hide" onclick="save()" disabled><img src="./img/save.svg" alt="">Save</button>
                 <button><img src="./img/link.svg" alt="">Copy link</button>
                 <button><img src="./img/code.svg" alt="">Share code</button>
                 <button id="run"><img src="./img/play.svg" alt="">Run</button>
@@ -108,7 +103,7 @@
             <div class="editor-container">
                 <p>
                 </p>
-                <textarea id="textarea" onkeypress="recCode()">
+                <textarea id="textarea" spellcheck="false" onkeypress="enableSave()">
                 </textarea>
             </div>
 
@@ -125,4 +120,9 @@
 </div>
 </body>
 <script src="main.js"></script>
+
+<script>
+    genSideBar(state)   
+</script>
+
 </html>

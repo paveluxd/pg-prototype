@@ -138,6 +138,16 @@ nav{
     filter: none;
 }
 
+.btn-round:disabled{
+    pointer-events: none;
+    display: none !important;
+}
+
+button:disabled{
+    pointer-events: none;
+    filter: opacity(0.3);
+}
+
 
 
 /* Bot */
@@ -183,6 +193,7 @@ nav{
 .editor-nav{
     border-bottom: 1px solid var(--kt-20);
     padding: 12px 32px;
+    gap: 4px;
 }
 
 #run{
@@ -240,6 +251,7 @@ a{
     justify-content: center;
     align-items: center;
     padding: 0 20px;
+    cursor: pointer;
 }
 
 
@@ -310,7 +322,7 @@ textarea:active, textarea:focus{
     background-color: white;
     margin: auto;
     padding: 24px;
-    gap: 48px;
+    gap: 12px;
     width: 504px;
 }
 
@@ -318,7 +330,15 @@ textarea:active, textarea:focus{
     color: black !important;
 }
 
+.dialogue-box input {
+    background-color: white;
+    border: 1px solid black;
+    min-height: 44px;
+    color: black;
+}
 
+
+/* Notification */
 .notification{
     position: fixed;
     right: 56px;

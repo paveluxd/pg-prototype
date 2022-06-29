@@ -1,7 +1,10 @@
-let selectedSnip      //Selected code snippet
-let snippetSerial = 1 //Serial
+//Selected code snippet
+let selectedSnip   
 
-// let auth = false
+//Serial
+let snippetSerial = 1 
+
+//Snippet data
 let state = {
     external:{
         external: ['Test code 1', 
@@ -137,17 +140,163 @@ let state = {
     }
 }
 
-let initialState = state
+//Default state
+let initialState = {
+    external:{
+        external: ['Test code 1', 
+            '//External snippet\n'+
+            '//Test code\n\n'+
+            'fun main() {\n'+
+            '    val placeholder = "test"\n'+
+            '    println(placeholder)\n'+
+            '}\n'
+        ]
+    },
+    examples: {
+        simple: ['Simple', 
+            'fun main() {\n'+
+            '    val name = "stranger"        // Declare your first variable\n'+
+            '    println("Hi, $name!")        // ...and use it!\n'+
+            '    print("Current count:")\n'+
+            '    for (i in 0..10) {           // Loop over a range from 0 to 10\n'+
+            '        print(" $i")\n'+
+            '    }\n'+
+            '}\n'
+        ],
+        asyncronous: ['Asyncronous', 
+            'import kotlinx.coroutines.*\n\n'+
 
- //Insert after
+            'suspend fun main() {                                // A function that can be suspended and resumed later\n'+
+            '    val start = System.currentTimeMillis()\n'+
+            '    coroutineScope {                                // Create a scope for starting coroutines\n'+
+            '        for (i in 1..10) {\n'+
+            '            launch {                                // Start 10 concurrent tasks\n'+
+            '                delay(3000L - i * 300)              // Pause their execution\n'+
+            '                log(start, "Countdown: $i")\n'+
+            '            }\n'+
+            '        }\n'+
+            '    }\n'+
+            '    // Execution continues when all coroutines in the scope have finished\n'+
+            '    log(start, "Liftoff!")\n'+
+            '}\n\n'+
+        
+            'fun log(start: Long, msg: String) {\n'+
+            '    println("$msg " +\n'+
+            '            "(on ${Thread.currentThread().name}) " +\n'+
+            '            "after ${(System.currentTimeMillis() - start)/1000F}s")\n'+
+            '}'
+        ],
+        objectOriented: ['Object-oriented', 
+            'abstract class Person(val name: String) {\n'+
+            '    abstract fun greet()\n'+
+            '}\n\n'+
+            
+            'interface FoodConsumer {\n'+
+            '    fun eat()\n'+
+            '    fun pay(amount: Int) = println("Delicious! Here\'s $amount bucks!")\n'+
+            '}\n\n'+
+            
+            'class RestaurantCustomer(name: String, val dish: String) : Person(name), FoodConsumer {\n'+
+            '    fun order() = println("$dish, please!")\n'+
+            '    override fun eat() = println("*Eats $dish*")\n'+
+            '    override fun greet() = println("It\'s me, $name.")\n'+
+            '}\n\n'+
+            
+            'fun main() {\n'+
+            '    val sam = RestaurantCustomer("Sam", "Mixed salad")\n'+
+            '    sam.greet() // An implementation of an abstract function\n'+
+            '    sam.order() // A member function\n'+
+            '    sam.eat() // An implementation of an interface function\n'+
+            '    sam.pay(10) // A default implementation in an interface\n'+
+            '}'
+        ],
+        functional: ['Functional', 
+            'fun main() {\n'+
+            '    // Who sent the most messages?\n'+
+            '    val frequentSender = messages\n'+
+            '        .groupBy(Message::sender)\n'+
+            '        .maxByOrNull { (_, messages) -> messages.size }\n'+
+            '        ?.key                                                 // Get their names\n'+
+            '    println(frequentSender) // [Ma]\n\n'+
+            
+            '    // Who are the senders?\n'+
+            '    val senders = messages\n'+
+            '        .asSequence()                                         // Make operations lazy (for a long call chain)\n'+
+            '        .filter { it.body.isNotBlank() && !it.isRead }        // Use lambdas...\n'+
+            '        .map(Message::sender)                                 // ...or member references\n'+
+            '        .distinct()\n'+
+            '        .sorted()\n'+
+            '        .toList()                                             // Convert sequence back to a list to get a result\n'+
+            '    println(senders) // [Adam, Ma]\n'+
+            '}\n\n'+
+            
+            'data class Message(                                          // Create a data class\n'+
+            '    val sender: String,\n'+
+            '    val body: String,\n'+
+            '    val isRead: Boolean = false,                              // Provide a default value for the argument\n'+
+            ')\n\n'+
+            
+            'val messages = listOf(                                       // Create a list\n'+
+            '    Message("Ma", "Hey! Where are you?"),\n'+
+            '    Message("Adam", "Everything going according to plan today?"),\n'+
+            '    Message("Ma", "Please reply. I\'ve lost you!"),\n'+
+            ')\n'
+        ],
+        idealForTests: ['Idela for tests', 
+            '// Tests\n'+
+            '// The following example works for JVM only\n'+
+            'import org.junit.Test\n'+
+            'import kotlin.test.*\n\n'+
+
+            'class SampleTest {\n'+
+            '    @Test\n'+
+            '    fun `test sum`() {                  // Write test names with whitespaces in backticks\n'+
+            '        val a = 1\n'+
+            '        val b = 41\n'+
+            '        assertEquals(42, sum(a, b), "Wrong result for sum($a, $b)")\n'+
+            '    }\n\n'+
+
+            '    @Test\n'+
+            '    fun `test computation`() {\n'+
+            '        assertTrue("Computation failed") {\n'+
+            '            setup()                     // Use lambda returning the test subject\n'+
+            '            compute()\n'+
+            '        }\n'+
+            '    }\n'+
+            '}\n\n'+
+
+            '// Sources\n'+
+            'fun sum(a: Int, b: Int) = a + b\n'+
+            'fun setup() {}\n'+
+            'fun compute() = true\n'
+        ], 
+    },
+    snippets: {
+        reference: ['Code snippet', ''],
+    }
+}
+
+//Set playground to authenticated state
+
+if (localStorage.getItem('Auth') === 'y'){
+    authenticate()
+    toggleHide('authDialogue')
+} 
+else { 
+    localStorage.setItem('Auth', 'n');
+    genSideBar(initialState)   
+}
+
+
+
+//Function
+//Reorder items to match layout
 function insertAfter(newNode, existingNode) {
     existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
 }
 
 //Add side-bar items
-function genSideBar(stateObj, snippetsGroup){
-    //Clear old nav
-    // [...document.querySelector('.examples').children].forEach(function(e){e.remove()});
+function genSideBar(stateObj){
 
     //Add items
     for(i=0; i < Object.keys(stateObj).length; i++){
@@ -155,7 +304,6 @@ function genSideBar(stateObj, snippetsGroup){
         //Remove container
         if(document.querySelector('.' + Object.keys(stateObj)[i]) !== null){
             document.querySelector('.' + Object.keys(stateObj)[i]).remove()
-            console.log(1);
         }
 
         //Generaate container
@@ -202,7 +350,8 @@ function genSideBar(stateObj, snippetsGroup){
         })
     }
 
-    if(snippetsGroup !== 'external'){
+    //Remove external group
+    if(pageType !== 'external'){
         document.querySelector('.external').remove()
     }
 
@@ -210,6 +359,8 @@ function genSideBar(stateObj, snippetsGroup){
     makeActive(document.querySelector('.top-section').children[0].children[1].children[0])
 }
 
+
+//Make menu item active
 function makeActive(elem){
     //Remove previously active
     if(document.querySelector('.active') !== null){
@@ -230,12 +381,20 @@ function makeActive(elem){
     let itemTitle = elem.innerHTML //"Title"
 
     //Find this item in object based on elements innerHtml
+    //If you are signed in search state
     let objItem
-    Object.keys(state).forEach(function(elem){
-        Object.keys(state[elem]).forEach(function(snippetRecord){
-            // console.log(state[elem][snippetRecord][0]);
-            if(itemTitle === state[elem][snippetRecord][0]){
-                objItem = state[elem][snippetRecord]
+    let snippetObj
+
+    if(localStorage.getItem('Auth') === 'y'){
+        snippetObj = state
+    } else {
+        snippetObj = initialState
+    }
+
+    Object.keys(snippetObj).forEach(function(elem){
+        Object.keys(snippetObj[elem]).forEach(function(snippetRecord){
+            if(itemTitle === snippetObj[elem][snippetRecord][0]){
+                objItem = snippetObj[elem][snippetRecord]
             }
         })
     })
@@ -254,6 +413,9 @@ function makeActive(elem){
 
         //Set selected snip variable
         selectedSnip = objItem
+
+        //Add new state to LS
+        localStorage.setItem('state', JSON.stringify(state))
     } 
     
     else {
@@ -268,28 +430,33 @@ function makeActive(elem){
     document.querySelector('#textarea').value = textAreaContent
 }
 
-//Set playground to authenticated state
-if(localStorage.getItem('Auth') === undefined){
-    localStorage.setItem('Auth', 'n');
-} 
-else if (localStorage.getItem('Auth') === 'y'){
-    authenticate()
-    toggleHide('authDialogue')
-}
-
+//Authentication
 function authenticate(val){
 
+    //Sign out
     if(val === 'sign out'){
-        // auth = false
         localStorage.setItem('Auth', 'n')
-    } else{
-        // auth = true
+        genSideBar(initialState)
+    } 
+    //Sign in
+    else{
+        //Update auth state
         localStorage.setItem('Auth', 'y')
+
+        //Check if LS record exists, load snippets from it on log in
+        if(localStorage.getItem('state') !== null){
+            state = JSON.parse(localStorage.getItem('state'))
+        } else {
+            localStorage.setItem('state', JSON.stringify(state))
+        }
+
+        genSideBar(JSON.parse(localStorage.getItem('state')))
+
         toggleHide('authDialogue')
         notification('signin')
     }
 
-
+    //Toggle ui elements
     document.querySelector(".signin").classList.toggle('hide')
     document.querySelector(".signout").classList.toggle('hide')
     document.querySelector(".add").classList.toggle('hide')
@@ -322,9 +489,8 @@ function viewMenu(elem){
         itRename.setAttribute('onclick', 'toggleHide("deleteDialogue"), viewMenu(this)')
         
         itDelete.setAttribute('onclick', 'deleteItem(this), notification("delete")')
-
-        console.log(elem.parentNode.children[0].innerHTML, state.external.external[0]);
         
+        //Update label if external snippet
         if(elem.parentNode.children[0].innerHTML !== state.external.external[0]){
             itDelete.innerHTML = "Delete"
             menu.append(itRename, itDelete)
@@ -338,6 +504,7 @@ function viewMenu(elem){
     }  
 }
 
+//Hide modals and dialogues
 function toggleHide(id){
     document.getElementById(id).classList.toggle('hide')
 }
@@ -376,10 +543,14 @@ function addItem(){
     snippetSerial++
     snipBnt.setAttribute('onclick','makeActive(this)')
 
+    //Record new item in LS
+    //New item is recorded in makeActive()
+
     //Add sub-menu
     let button = document.createElement("button")
     button.classList = "btn-round sub-menu-button"
     button.setAttribute("onclick","viewMenu(this)")
+
     let icon = document.createElement("img")
     icon.setAttribute('src', './img/more.svg')
 
@@ -392,59 +563,75 @@ function addItem(){
     makeActive(snipBnt)
 }
 
-//Rename
-function rename(elem){
-    let modal = document.createElement()
-}
-
 //Delete snippet
 function deleteItem(itemNode){
 
-    //Check if no snippets
-    //
+    //Check if no snippets, reset the last item
     if(
-        document.querySelector('.snippets').children.length === 3 && 
+        document.querySelector('.snippets').children.length === 2 && 
         itemNode.parentNode.parentNode.parentNode.classList.contains('snippets'))
     {
         //Reset the name
         document.querySelector('.snippets').children[1].children[0].innerHTML = state.snippets.reference[0]
         document.querySelector('#textarea').value=""
         viewMenu(itemNode.parentNode)
-        //Hide menu
     }
 
     //Delete item
     else {
-        //Select another snipet
+        //Select another snippet
         if(
             itemNode.parentNode.parentNode.classList.contains('active') && 
             document.querySelector('.examples').children.length !== 1)
         {
             let itemContainer = itemNode.parentNode.parentNode.parentNode
-            console.log(itemContainer);
-            
             makeActive(itemContainer.children[1].children[0])
+        }
+        
+        
+        //Record new state
+        //Find item by innerHTML
+        let itemTitle = itemNode.parentNode.parentNode.children[0].innerHTML //"Title"
+        
 
-            //Delete item
-            itemNode.parentNode.parentNode.remove()
-        }
-        else{
-            //Delete item
-            itemNode.parentNode.parentNode.remove()
-        }
+        //Find this item in object based on elements innerHtml and delete it
+        Object.keys(state).forEach(function(elem){
+            Object.keys(state[elem]).forEach(function(snippetRecord){
+                if(itemTitle === state[elem][snippetRecord][0]){
+                    console.log(state[elem][snippetRecord]);
+                    delete state[elem][snippetRecord]
+                }
+            })
+        })
+        
+        //Update LS
+        localStorage.setItem('state', JSON.stringify(state))
+
+        //Delet html elem
+        itemNode.parentNode.parentNode.remove() 
     }
 
-    //If last example, delete example titles.
+    //If last snippet in the group, delete group title.
     Object.keys(state).forEach(function(group){
-        if(document.querySelector('.' + group).children.length === 1){
+        if(
+            document.querySelector('.' + group) !== null && 
+            document.querySelector('.' + group).children.length === 1
+        ){
             document.querySelector('.' + group).children[0].remove()
         }
     })
 }
 
+//Rename
+function rename(elem){
+    let modal = document.createElement()
+}
+
+//Save changes to snippet
 function save(){
     //Add code to object
-    selectedSnip[1] = document.querySelector('#textarea').value    
+    selectedSnip[1] = document.querySelector('#textarea').value
+    localStorage.setItem('state', JSON.stringify(state))    
 
     document.querySelector('.save').disabled = true
     notification("save")

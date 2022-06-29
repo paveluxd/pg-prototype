@@ -1,93 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Playground</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Playground</title>
 
-    <link rel="stylesheet" href="./main.css">
-</head>
-<body id="nav">
+        <link rel="stylesheet" href="./main.css">
+    </head>
 
-<!-- Rename dialogue -->
-<div id="deleteDialogue" class="shade hide">
-    <div class="dialogue-box">
-        <div style="display: flex; gap: 12px;">
-            <h3 style=" margin: auto auto auto 0;">Rename code snippet</h3>
+    <body >
 
-            <button class="btn-round" onclick="toggleHide('deleteDialogue')" style="background-color: var(--w0);">
-                <img src="./img/close.svg">
-            </button>
-        </div>
+        <!-- Dialogues -->
+        <!-- Rename dialogue -->
+        <div id="deleteDialogue" class="shade hide">
+            <div class="dialogue-box">
+                <div style="display: flex; gap: 12px;">
+                    <h3 style=" margin: auto auto auto 0;">Rename code snippet</h3>
 
-        <input type="text">
+                    <button class="btn-round" onclick="toggleHide('deleteDialogue')" style="background-color: var(--w0);">
+                        <img src="./img/close.svg">
+                    </button>
+                </div>
 
-        <div style="display: flex; gap: 12px;">
-            <button onclick="toggleHide('deleteDialogue')">Rename</button>
-            <button onclick="toggleHide('deleteDialogue')">Cancel</button>
-        </div>
-    </div>
-</div>
+                <input type="text">
 
-<!-- Auth dialogue -->
-<div id="authDialogue" class="shade hide">
-    <div class="dialogue-box">
-        <div style="display: flex; gap: 12px;">
-            <h3 style="margin: auto auto auto 0;">Authenticate</h3>
-            
-            <button class="btn-round" onclick="toggleHide('authDialogue')" style="background-color: var(--w0);">
-                <img src="./img/close.svg">
-            </button>
-        </div>
-        <p class="text-3">We save code-samples only for authorized users</p>
-        <p class="text-3">Sign in with</p>
-        
-        <div style="display: flex; gap: 12px;">
-            <a href="./auth-form.html" target="_blank" onclick="authenticate(), genSideBar(initialState)">Google</a>
-        </div>
-    </div>
-</div>
-
-
-
-<!-- Website navigation -->
-    <nav class="nav" >
-        <img src="./img/logo.svg" alt="" style="margin-right: auto;">
-        <a href="">Solutions</a>
-        <a href="">Docs</a>
-        <a href="">Community</a>
-        <a href="">Teach</a>
-        <a href="" class="selected">Play</a>
-        <a href=""><img src="./img/search.svg" alt=""></a>
-    </nav>
-
-<!-- Container -->
-    <div class="container">
-
-<!-- Sidebar -->
-        <div class="sidebar">     
-            <div class="top-section"></div>      
-
-            <button class="add hide" onclick="addItem()"><img src="./img/plus.svg" alt="">Add snippet</button>
-            
-            <div class="signout container-bot hide">
-                <img src="./img/person.svg" style="height: 24px;">
-                <p class="text-3">Robert Parker</p>
-                <button class="btn-round" onclick="authenticate('sign out'), genSideBar(initialState)"><img src="./img/exit.svg" alt=""></button>
-            </div>
-
-            <div class="container-bot signin">
-                <p>Sign in to create & save snippets</p>
-                <!-- href="./auth-form.html" -->
-                <a class="btn-border" onclick="toggleHide('authDialogue')">Sign in</a>
+                <div style="display: flex; gap: 12px;">
+                    <button onclick="toggleHide('deleteDialogue')">Rename</button>
+                    <button onclick="toggleHide('deleteDialogue')">Cancel</button>
+                </div>
             </div>
         </div>
 
-<!-- Editor -->
-        <div class="editor">
+        <!-- Auth dialogue -->
+        <div id="authDialogue" class="shade hide">
+            <div class="dialogue-box">
+                <div style="display: flex; gap: 12px;">
+                    <h3 style="margin: auto auto auto 0;">Authenticate</h3>
+                    
+                    <button class="btn-round" onclick="toggleHide('authDialogue')" style="background-color: var(--w0);">
+                        <img src="./img/close.svg">
+                    </button>
+                </div>
+                <p class="text-3">We save code-samples only for authorized users</p>
+                <p class="text-3">Sign in with</p>
+                
+                <div style="display: flex; gap: 12px;">
+                    <a href="./auth-form.html" target="_blank" onclick="authenticate()">Google</a>
+                </div>
+            </div>
+        </div>
 
-<!-- Editor nav -->
+
+        <!-- Website -->
+        <!-- Website navigation -->
+        <nav class="nav" >
+            <img src="./img/logo.svg" alt="" style="margin-right: auto;">
+            <a href="">Solutions</a>
+            <a href="">Docs</a>
+            <a href="">Community</a>
+            <a href="">Teach</a>
+            <a href="" class="selected">Play</a>
+            <a href=""><img src="./img/search.svg" alt=""></a>
+        </nav>
+
+        <!-- Container -->
+        <div class="container">
+
+            <!-- Sidebar -->
+            <div class="sidebar">     
+                <div class="top-section"></div>      
+
+                <button class="add hide" onclick="addItem()"><img src="./img/plus.svg" alt="">Add snippet</button>
+                
+                <!-- Sign out section -->
+                <div class="signout container-bot hide">
+                    <img src="./img/person.svg" style="height: 24px;">
+                    <p class="text-3">email@gemail.com</p>
+                    <button class="btn-round" onclick="authenticate('sign out')"><img src="./img/exit.svg" alt=""></button>
+                </div>
+
+                <!-- Sign in section -->
+                <div class="container-bot signin">
+                    <p>Sign in to create & save snippets</p>
+                    <!-- href="./auth-form.html" -->
+                    <a class="btn-border" onclick="toggleHide('authDialogue')">Sign in</a>
+                </div>
+            </div>
+
+            <!-- Editor -->
+            <div class="editor">
+
+            <!-- Editor nav -->
             <div class="nav editor-nav">
                 <button>Kotlin 1.5.21 <img src="./img/dropdown.svg" alt=""></button>
                 <button>JVM <img src="./img/dropdown.svg" alt=""></button>
@@ -99,7 +103,7 @@
                 <button id="run"><img src="./img/play.svg" alt="">Run</button>
             </div>
 
-<!-- Editor container -->
+            <!-- Editor container -->
             <div class="editor-container">
                 <p>
                 </p>
@@ -107,22 +111,19 @@
                 </textarea>
             </div>
 
-<!-- Help button -->
+            <!-- Help button -->
             <button id="help" class="btn-round btn-border"><img src="./img/help.svg" alt=""></button>
+            </div>
         </div>
-    </div>
 
-<!-- Notification -->
-<div id ="notification" class="notification hide">
-    <p id="notif-text">Placeholder</p>
-    <button id="notif-undo" class="hide">Undo</button>
-    <img src="./img/loader.svg">
-</div>
-</body>
-<script src="main.js"></script>
+        <!-- Notification -->
+        <div id ="notification" class="notification hide">
+            <p id="notif-text">Placeholder</p>
+            <button id="notif-undo" class="hide">Undo</button>
+            <img src="./img/loader.svg">
+        </div>
+    </body>
 
-<script>
-    genSideBar(state)   
-</script>
-
+    <script> let pageType = 'reg'</script>
+    <script src="main.js"></script>
 </html>

@@ -316,7 +316,7 @@ function genSideBar(stateObj){
 
         //Gen container title
         let containerTitle = document.createElement("p")
-        containerTitle.innerHTML = 'CODE ' + Object.keys(stateObj)[i].toUpperCase() 
+        containerTitle.innerHTML = '' + Object.keys(stateObj)[i].toUpperCase() 
 
         //Append
         container.append(containerTitle)
@@ -376,10 +376,10 @@ function genSideBar(stateObj){
 //Make menu item active
 function makeActive(elem, activeState){
 
-    if(localStorage.getItem('Saved')==='n' && activeState !== 'initial'){
-        console.log(1);
-    }
-    else{
+    // if(localStorage.getItem('Saved')==='n' && activeState !== 'initial'){
+    //     console.log(1);
+    // }
+    // else{
 
         
         //Remove previously active
@@ -453,7 +453,7 @@ function makeActive(elem, activeState){
             enableSave()
         }
     }
-}
+// }
 
 //Authentication
 function authenticate(val){

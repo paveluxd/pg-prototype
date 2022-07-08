@@ -6,16 +6,21 @@ let snippetSerial = 1
 
 //Snippet data
 let state = {
-    external:{
-        external: ['Test code 1', 
-            '//External snippet\n'+
-            '//Test code\n\n'+
+    snippets: {
+        link: ['Code snippet',
             'fun main() {\n'+
-            '    val placeholder = "test"\n'+
-            '    println(placeholder)\n'+
+            '    val name = "placeholder"       // Declare a variable\n'+
+            '    println("Test, $name!")\n'+
+            '    print("Current count:")\n'+
+            '    for (i in 0..10) {             // Loop over a range from 0 to 10\n'+
+            '        print(" $i")\n'+
+            '    }\n'+
             '}\n'
-        ]
+        ],
+
+        reference: ['My snippet', '//You can add your code here.'],
     },
+
     examples: {
         simple: ['Simple', 
             'fun main() {\n'+
@@ -134,24 +139,27 @@ let state = {
             'fun setup() {}\n'+
             'fun compute() = true\n'
         ], 
-    },
-    snippets: {
-        reference: ['Code snippet', ''],
-    }
+        
+    },  
 }
 
 //Default state
 let initialState = {
-    external:{
-        external: ['Test code 1', 
-            '//External snippet\n'+
-            '//Test code\n\n'+
+    snippets: {
+        link: ['Code snippet',
             'fun main() {\n'+
-            '    val placeholder = "test"\n'+
-            '    println(placeholder)\n'+
+            '    val name = "placeholder"       // Declare a variable\n'+
+            '    println("Test, $name!")\n'+
+            '    print("Current count:")\n'+
+            '    for (i in 0..10) {             // Loop over a range from 0 to 10\n'+
+            '        print(" $i")\n'+
+            '    }\n'+
             '}\n'
-        ]
+        ],
+
+        reference: ['My snippet', '//You can add your code here.'],
     },
+
     examples: {
         simple: ['Simple', 
             'fun main() {\n'+
@@ -270,26 +278,22 @@ let initialState = {
             'fun setup() {}\n'+
             'fun compute() = true\n'
         ], 
-    },
-    snippets: {
-        reference: ['Code snippet', ''],
-    }
+        
+    }, 
 }
 
 //Set playground to authenticated state
-
 if (localStorage.getItem('Auth') === 'y'){
     authenticate()
     toggleHide('authDialogue')
 } 
 else { 
     localStorage.setItem('Auth', 'n');
-    genSideBar(initialState)   
+    genSideBar(initialState)
 }
 
 
-
-//Function
+//Functions
 //Reorder items to match layout
 function insertAfter(newNode, existingNode) {
     existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
@@ -312,7 +316,7 @@ function genSideBar(stateObj){
 
         //Gen container title
         let containerTitle = document.createElement("p")
-        containerTitle.innerHTML = Object.keys(stateObj)[i].toUpperCase() 
+        containerTitle.innerHTML = 'CODE ' + Object.keys(stateObj)[i].toUpperCase() 
 
         //Append
         container.append(containerTitle)
@@ -324,6 +328,7 @@ function genSideBar(stateObj){
             //Add container
             let snipItem = document.createElement("div")
             snipItem.classList = "snip-item"
+            snipItem.id = stateObj[Object.keys(stateObj)[i]][item][0]
 
             //Add snippet button
             let snipBnt = document.createElement("button")
@@ -350,84 +355,104 @@ function genSideBar(stateObj){
         })
     }
 
-    //Remove external group
-    if(pageType !== 'external'){
-        document.querySelector('.external').remove()
+    //If link, hide non-link item
+    if (pageType === 'link' && localStorage.getItem('Auth') === 'n'){
+        document.getElementById(state.snippets.reference[0]).remove()
     }
+    else if(pageType === 'link'){
+
+    }
+    else {
+        document.getElementById(state.snippets.link[0]).remove()
+    }
+
+    //Move add button
+    document.querySelector('.top-section').insertBefore(document.querySelector('.add'), document.querySelector('.examples'));
 
     //Set first item to active
-    makeActive(document.querySelector('.top-section').children[0].children[1].children[0])
+    makeActive(document.querySelector('.top-section').children[0].children[1].children[0], 'initial')
 }
 
-
 //Make menu item active
-function makeActive(elem){
-    //Remove previously active
-    if(document.querySelector('.active') !== null){
-        document.querySelector('.active').classList.remove("active")
+function makeActive(elem, activeState){
+
+    if(localStorage.getItem('Saved')==='n' && activeState !== 'initial'){
+        console.log(1);
     }
+    else{
 
-    //Mod save button for external
-    if(elem.innerHTML === state.external.external[0]){
-        document.querySelector('.save').disabled = false
-        document.querySelector('.save').innerHTML = '<img src="./img/save.svg" alt="">Add to snippets'
-    } else {
-        document.querySelector('.save').disabled = true
-        document.querySelector('.save').innerHTML = '<img src="./img/save.svg" alt="">Save'
-    }
-
-    elem.parentNode.classList.add('active')
-
-    let itemTitle = elem.innerHTML //"Title"
-
-    //Find this item in object based on elements innerHtml
-    //If you are signed in search state
-    let objItem
-    let snippetObj
-
-    if(localStorage.getItem('Auth') === 'y'){
-        snippetObj = state
-    } else {
-        snippetObj = initialState
-    }
-
-    Object.keys(snippetObj).forEach(function(elem){
-        Object.keys(snippetObj[elem]).forEach(function(snippetRecord){
-            if(itemTitle === snippetObj[elem][snippetRecord][0]){
-                objItem = snippetObj[elem][snippetRecord]
-            }
-        })
-    })
-
-    let textAreaContent
-
-    //If undefined create
-    if(objItem === undefined){
         
-        //Create new snippet record
-        state.snippets['snippet' + snippetSerial] = [itemTitle, '']
-        objItem = state.snippets['snippet' + snippetSerial]
+        //Remove previously active
+        if(document.querySelector('.active') !== null){
+            document.querySelector('.active').classList.remove("active")
+        }
+
+        //Mod save button for external
+        // if(elem.innerHTML === state.external.external[0]){
+        //     document.querySelector('.save').disabled = false
+        //     document.querySelector('.save').innerHTML = '<img src="./img/save.svg" alt="">Add to snippets'
+        // } else {
+            document.querySelector('.save').disabled = true
+            // document.querySelector('.save').innerHTML = '<img src="./img/save.svg" alt="">Save'
+        // }
+
+        elem.parentNode.classList.add('active')
+
+        let itemTitle = elem.innerHTML //"Title"
+
+        //Find item in obj based on innerHtml
+        let objItem
+        let snippetObj
+
+        if(localStorage.getItem('Auth') === 'y'){
+            snippetObj = state
+        } else {
+            snippetObj = initialState
+        }
+
+        Object.keys(snippetObj).forEach(function(elem){
+            Object.keys(snippetObj[elem]).forEach(function(snippetRecord){
+                if(itemTitle === snippetObj[elem][snippetRecord][0]){
+                    objItem = snippetObj[elem][snippetRecord]
+                }
+            })
+        })
+
+        let textAreaContent
+
+        //If snippet is new create record in state
+        if(objItem === undefined){
+            
+            //Create new snippet record
+            state.snippets['snippet' + snippetSerial] = [itemTitle, '']
+            objItem = state.snippets['snippet' + snippetSerial]
+
+            //Update text area
+            textAreaContent = objItem[1]
+
+            //Set selected snip variable
+            selectedSnip = objItem
+
+            //Add new state to LS
+            localStorage.setItem('state', JSON.stringify(state))
+        } 
+        
+        else {
+            //Update text area
+            textAreaContent = objItem[1]
+
+            //Set selected snip variable
+            selectedSnip = objItem
+        }
 
         //Update text area
-        textAreaContent = objItem[1]
+        document.querySelector('#textarea').value = textAreaContent
 
-        //Set selected snip variable
-        selectedSnip = objItem
-
-        //Add new state to LS
-        localStorage.setItem('state', JSON.stringify(state))
-    } 
-    
-    else {
-        //Update text area
-        textAreaContent = objItem[1]
-
-        //Set selected snip variable
-        selectedSnip = objItem
+        //Enable save for link item
+        if(selectedSnip[0] === 'Code snippet'){
+            enableSave()
+        }
     }
-
-    //Update text area based on obj value.
-    document.querySelector('#textarea').value = textAreaContent
 }
 
 //Authentication
@@ -443,7 +468,7 @@ function authenticate(val){
         //Update auth state
         localStorage.setItem('Auth', 'y')
 
-        //Check if LS record exists, load snippets from it on log in
+        //Manage state in LS
         if(localStorage.getItem('state') !== null){
             state = JSON.parse(localStorage.getItem('state'))
         } else {
@@ -451,7 +476,6 @@ function authenticate(val){
         }
 
         genSideBar(JSON.parse(localStorage.getItem('state')))
-
         toggleHide('authDialogue')
         notification('signin')
     }
@@ -491,7 +515,7 @@ function viewMenu(elem){
         itDelete.setAttribute('onclick', 'deleteItem(this), notification("delete")')
         
         //Update label if external snippet
-        if(elem.parentNode.children[0].innerHTML !== state.external.external[0]){
+        if(elem.parentNode.children[0].innerHTML !== ''){
             itDelete.innerHTML = "Delete"
             menu.append(itRename, itDelete)
         }
@@ -598,7 +622,6 @@ function deleteItem(itemNode){
         Object.keys(state).forEach(function(elem){
             Object.keys(state[elem]).forEach(function(snippetRecord){
                 if(itemTitle === state[elem][snippetRecord][0]){
-                    console.log(state[elem][snippetRecord]);
                     delete state[elem][snippetRecord]
                 }
             })
@@ -648,3 +671,8 @@ function enableSave(){
     //Record state in local storage
     localStorage.setItem('Saved', 'n');
 }
+
+//Activate save for external
+// if(selectedSnip[0] === 'Code snippet'){
+//     enableSave()
+// }
